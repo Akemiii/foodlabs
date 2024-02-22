@@ -3,8 +3,6 @@ package com.foodlabs.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.UUID;
-
 @Entity
 @Table(name = "orderProducts")
 @Getter
@@ -12,7 +10,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class orderProducts {
+public class OrderProducts {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
