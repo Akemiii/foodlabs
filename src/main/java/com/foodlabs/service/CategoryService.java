@@ -56,6 +56,8 @@ public class CategoryService {
             category.setName(request.getName());
         if (Objects.nonNull(request.getImage()) && !request.getImage().isEmpty())
             category.setImage(request.getImage());
+        if (Objects.nonNull(request.getDescription()) && !request.getDescription().isEmpty())
+            category.setDescription(request.getDescription());
 
         repository.save(category);
 
