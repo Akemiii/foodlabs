@@ -16,16 +16,16 @@ import java.util.UUID;
 public class Product {
 
     @Id
-    public UUID productId;
-    public String name;
-    public BigDecimal price;
-    public String image;
-    public boolean offer;
-    public BigDecimal offerPrice;
+    private UUID productId;
+    private String name;
+    private BigDecimal price;
+    private String image;
+    private boolean offer;
+    private BigDecimal offerPrice;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    public Category category;
+    private Category category;
 
 
 }

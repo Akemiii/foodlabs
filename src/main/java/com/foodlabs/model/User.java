@@ -16,12 +16,12 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    public UUID userId;
-    public String name;
+    private UUID userId;
+    private String name;
     @Column(unique = true)
-    public String email;
-    public String password;
-    public boolean admin;
-    public int ordersCount;
+    private String email;
+    private String password;
+    private boolean admin;
+    private int ordersCount;
 
 }

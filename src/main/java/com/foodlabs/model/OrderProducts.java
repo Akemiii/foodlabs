@@ -14,13 +14,13 @@ public class OrderProducts {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    public Long orderProductsId;
+    private Long orderProductsId;
     @ManyToOne
     @JoinColumn(name = "order_id")
-    public Order orderId;
+    private Order orderId;
     @ManyToOne
     @JoinColumn(name = "product_id")
-    public Product productId;
+    private Product productId;
     private Integer quantity;
     private String comment;
 

@@ -3,6 +3,7 @@ package com.foodlabs.handlers;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -18,11 +19,13 @@ import java.util.Map;
 import java.util.Objects;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptions {
 
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Object>  handle(){
+        log.warn("GlobalExceptions::EntityNotFoundException");
         return ResponseEntity.notFound().build();
     }
 
@@ -72,8 +75,8 @@ public class GlobalExceptions {
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(error);
     }
 
-    private error customError(int status, String message){
-        final var error = new error();
+    private Error customError(int status, String message){
+        final var error = new Error();
 
         error.setStatusCode(status);
         error.setMessage(message);
@@ -83,7 +86,7 @@ public class GlobalExceptions {
 
     @Getter
     @Setter
-    static class error{
+    static class Error{
         private int statusCode;
         private String message;
     }

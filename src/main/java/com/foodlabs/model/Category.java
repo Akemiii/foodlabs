@@ -4,8 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.UUID;
@@ -20,11 +19,10 @@ import java.util.UUID;
 public class Category {
 
     @Id
-    public UUID categoryId;
+    private UUID categoryId;
     @Column(unique = true)
-    @NotEmpty
-    @NotNull
-    public String name;
-    public String image;
-    public String description;
+    @NotBlank
+    private String name;
+    private String image;
+    private String description;
 }
