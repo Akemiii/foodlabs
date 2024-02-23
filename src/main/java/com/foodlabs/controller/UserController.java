@@ -2,10 +2,10 @@ package com.foodlabs.controller;
 
 import com.foodlabs.dto.request.UserRequest;
 import com.foodlabs.dto.response.UserResponse;
+import com.foodlabs.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -13,33 +13,18 @@ import java.util.UUID;
 @RequestMapping("/users")
 public class UserController {
 
+    private final UserService service;
+
     @PostMapping
     public UserResponse createUser(@RequestBody UserRequest request) {
 
-        return null;
+        return service.createNewUser(request);
     }
 
     @GetMapping("/{userId}")
     public UserResponse getUser(@PathVariable UUID userId) {
 
-        return null;
-    }
-
-    @GetMapping
-    public List<UserResponse> getUsers(){
-
-        return null;
-    }
-
-    @PutMapping("/{userId}")
-    public UserResponse updateUser(){
-
-        return null;
-    }
-
-    @DeleteMapping("/{userId}")
-    public void deleteUser(){
-
+        return service.getUserById(userId);
     }
 
 }
