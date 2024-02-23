@@ -29,23 +29,42 @@ public class CategoryService {
     @SneakyThrows
     private Category findById(UUID categoryId) {
         log.debug("CategoryService::findById {}", categoryId);
-        return repository.findById(categoryId)
-                .orElseThrow(EntityNotFoundException::new);
+
+        return repository.findById(categoryId).orElseThrow(EntityNotFoundException::new);
     }
 
+    /**
+     * This method will fetch category from DB by categoryId
+     *
+     * @param categoryId UUID
+     * @return CategoryResponse
+     */
     public CategoryResponse getCategoryById(final UUID categoryId) {
         return factory.createCategoryResponse(findById(categoryId));
     }
 
+    /**
+     * This method will fetch a list of category from DB
+     *
+     * @return List CategoryResponse
+     */
     public List<CategoryResponse> getProducts() {
         log.debug("CategoryService::getProducts started");
+
         final var categories = repository.findAll();
         log.debug("CategoryService::getProducts {}", categories);
         return categories.stream().map(factory::createCategoryResponse).toList();
     }
 
+    /**
+     * This method will create a new category
+     *
+     * @param request CreateCategoryRequest
+     * @return CategoryResponse
+     */
     public CategoryResponse createNewCategory(@RequestBody @Valid final CreateCategoryRequest request) {
         log.debug("CategoryService::createNewCategory started");
+
         final var category = factory.createCategoryModel(request);
         log.debug("CategoryService::createNewCategory mapped {}", category);
 
@@ -56,10 +75,19 @@ public class CategoryService {
         return factory.createCategoryResponse(category);
     }
 
-    public CategoryResponse updateCategory(final UUID categoryId, @RequestBody @Valid final UpdateCategoryRequest request) {
+    /** This method will update a category by id
+     *
+     * @param categoryId UUID
+     * @param request UpdateCategoryRequest
+     * @return CategoryResponse
+     */
+    public CategoryResponse updateCategory(final UUID categoryId,
+                                           @RequestBody @Valid final UpdateCategoryRequest request) {
+        log.debug("CategoryService::updateCategory started");
 
         final var category = findById(categoryId);
 
+        log.debug("CategoryService::updateCategory setter nonNull fields");
         if (Objects.nonNull(request.getName()) && !request.getName().isEmpty())
             category.setName(request.getName());
         if (Objects.nonNull(request.getImage()) && !request.getImage().isEmpty())
@@ -67,15 +95,25 @@ public class CategoryService {
         if (Objects.nonNull(request.getDescription()) && !request.getDescription().isEmpty())
             category.setDescription(request.getDescription());
 
+        log.debug("CategoryService::updateCategory updating category {}", category);
         repository.save(category);
+        log.debug("CategoryService::updateCategory updated category {}", category);
 
         return factory.createCategoryResponse(category);
     }
 
+    /** This method delete category by id
+     *
+     * @param categoryId UUID
+     */
     public void deleteCategory(final UUID categoryId) {
+        log.debug("CategoryService::deleteCategory started");
+
         final var category = findById(categoryId);
 
+        log.debug("CategoryService::updateCategory deleting category {}", category);
         repository.delete(category);
+        log.debug("CategoryService::updateCategory deleted category {}", category);
     }
 
 }
