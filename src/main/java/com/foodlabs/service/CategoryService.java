@@ -6,10 +6,10 @@ import com.foodlabs.DTO.response.CategoryResponse;
 import com.foodlabs.factory.CategoryFactory;
 import com.foodlabs.model.Category;
 import com.foodlabs.repositories.CategoryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -27,8 +27,7 @@ public class CategoryService {
     @SneakyThrows
     private Category findById(UUID categoryId) {
         return repository.findById(categoryId)
-                .orElseThrow(ChangeSetPersister.NotFoundException::new);
-
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     public CategoryResponse getById(final UUID categoryId) {
