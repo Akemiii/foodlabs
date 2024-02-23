@@ -1,4 +1,4 @@
-package com.foodlabs.Util;
+package com.foodlabs.util;
 
 public enum OrderStatus {
     PENDING,

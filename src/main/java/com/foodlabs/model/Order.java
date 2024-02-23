@@ -1,7 +1,7 @@
 package com.foodlabs.model;
 
 
-import com.foodlabs.Util.OrderStatus;
+import com.foodlabs.util.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
