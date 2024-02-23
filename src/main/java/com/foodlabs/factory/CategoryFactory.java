@@ -12,6 +12,12 @@ import java.util.UUID;
 @Slf4j
 public class CategoryFactory {
 
+    /**
+     * Creates a Category model object based on the provided request.
+     *
+     * @param request The request containing category details.
+     * @return A Category model object created from the request.
+     */
     public Category createCategoryModel(CreateCategoryRequest request) {
         log.debug("CategoryFactory::createCategoryModel started");
         return Category.builder()
@@ -22,8 +28,15 @@ public class CategoryFactory {
                 .build();
     }
 
+    /**
+     * Creates a CategoryResponse object based on the provided Category model.
+     *
+     * @param category The Category model object to create the response from.
+     * @return A CategoryResponse object created from the Category model.
+     */
     public CategoryResponse createCategoryResponse(Category category) {
         log.debug("CategoryFactory::createCategoryResponse started");
+        // Building a new CategoryResponse object using the Builder pattern
         return CategoryResponse.builder()
                 .categoryId(category.getCategoryId())
                 .name(category.getName())
