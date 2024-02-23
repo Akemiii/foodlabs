@@ -15,6 +15,7 @@ public class CategoryFactory {
                 .categoryId(UUID.randomUUID())
                 .name(request.getName())
                 .image(request.getImage())
+                .description(request.getDescription())
                 .build();
     }
 
@@ -23,6 +24,7 @@ public class CategoryFactory {
                 .categoryId(category.getCategoryId())
                 .name(category.getName())
                 .image(category.getImage())
+                .description(category.getDescription())
                 .build();
     }
 
