@@ -15,7 +15,7 @@ public class UserFactory {
      * @param request The UserRequest containing details for creating the user.
      * @return The User object created from the UserRequest.
      */
-    public User CreateUserModel(UserRequest request){
+    public User createUserModel(UserRequest request){
         return User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
@@ -29,7 +29,7 @@ public class UserFactory {
      * @param user The User object to create the response from.
      * @return The UserResponse object created from the User object.
      */
-    public UserResponse CreateUserResponse(User user){
+    public UserResponse createUserResponse(User user){
         return UserResponse.builder()
                 .userId(user.getUserId())
                 .name(user.getName())
