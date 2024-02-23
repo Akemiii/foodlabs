@@ -26,6 +26,13 @@ public class CategoryService {
     public final CategoryRepository repository;
     public final CategoryFactory factory;
 
+    /**
+     * Find a category by its ID.
+     *
+     * @param categoryId The ID of the category to find.
+     * @return The found category.
+     * @throws EntityNotFoundException if the category with the given ID does not exist.
+     */
     @SneakyThrows
     private Category findById(UUID categoryId) {
         log.debug("CategoryService::findById {}", categoryId);
@@ -34,19 +41,19 @@ public class CategoryService {
     }
 
     /**
-     * This method will fetch category from DB by categoryId
+     * Retrieve a category by its ID and transform it into a CategoryResponse object.
      *
-     * @param categoryId UUID
-     * @return CategoryResponse
+     * @param categoryId The ID of the category to retrieve.
+     * @return The CategoryResponse object representing the retrieved category.
      */
     public CategoryResponse getCategoryById(final UUID categoryId) {
         return factory.createCategoryResponse(findById(categoryId));
     }
 
     /**
-     * This method will fetch a list of category from DB
+     * Retrieves all categories and transforms them into a list of CategoryResponse objects.
      *
-     * @return List CategoryResponse
+     * @return List of CategoryResponse objects representing the retrieved categories.
      */
     public List<CategoryResponse> getProducts() {
         log.debug("CategoryService::getProducts started");
@@ -57,10 +64,10 @@ public class CategoryService {
     }
 
     /**
-     * This method will create a new category
+     * Creates a new category based on the provided request and returns the corresponding CategoryResponse.
      *
-     * @param request CreateCategoryRequest
-     * @return CategoryResponse
+     * @param request The request containing details for creating the category.
+     * @return The CategoryResponse representing the newly created category.
      */
     public CategoryResponse createNewCategory(@RequestBody @Valid final CreateCategoryRequest request) {
         log.debug("CategoryService::createNewCategory started");
@@ -75,11 +82,12 @@ public class CategoryService {
         return factory.createCategoryResponse(category);
     }
 
-    /** This method will update a category by id
+    /**
+     * Updates an existing category with the provided ID using the details from the request.
      *
-     * @param categoryId UUID
-     * @param request UpdateCategoryRequest
-     * @return CategoryResponse
+     * @param categoryId The ID of the category to update.
+     * @param request    The request containing updated details for the category.
+     * @return The CategoryResponse representing the updated category.
      */
     public CategoryResponse updateCategory(final UUID categoryId,
                                            @RequestBody @Valid final UpdateCategoryRequest request) {
@@ -102,9 +110,10 @@ public class CategoryService {
         return factory.createCategoryResponse(category);
     }
 
-    /** This method delete category by id
+    /**
+     * Deletes the category with the provided ID.
      *
-     * @param categoryId UUID
+     * @param categoryId The ID of the category to delete.
      */
     public void deleteCategory(final UUID categoryId) {
         log.debug("CategoryService::deleteCategory started");
