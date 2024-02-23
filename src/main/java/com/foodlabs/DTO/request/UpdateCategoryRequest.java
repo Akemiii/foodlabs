@@ -13,4 +13,5 @@ public class UpdateCategoryRequest {
 
     public String name;
     public String image;
+    public String description;
 }
