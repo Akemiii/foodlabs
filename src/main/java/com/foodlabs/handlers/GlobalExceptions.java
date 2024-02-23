@@ -23,18 +23,32 @@ import java.util.Objects;
 public class GlobalExceptions {
 
 
+    /**
+     * Exception handler for handling EntityNotFoundException.
+     * @return ResponseEntity with the appropriate status and message.
+     */
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Object>  handle(){
         log.warn("GlobalExceptions::EntityNotFoundException");
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Exception handler for handling NoResourceFoundException.
+     * @param exception The exception instance.
+     * @return ResponseEntity containing the error information.
+     */
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<Object>  handle(NoResourceFoundException exception){
         final var error = customError(exception.getStatusCode().value(), exception.getLocalizedMessage());
         return ResponseEntity.status(exception.getStatusCode().value()).body(error);
     }
 
+    /**
+     * Exception handler for handling HttpMessageNotReadableException.
+     * @param exception The exception instance.
+     * @return ResponseEntity containing the error information.
+     */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Object>  handle(HttpMessageNotReadableException exception){
 
@@ -43,6 +57,11 @@ public class GlobalExceptions {
         return ResponseEntity.status(error.getStatusCode()).body(error);
     }
 
+    /**
+     * Exception handler for handling MethodArgumentNotValidException.
+     * @param ex The exception instance.
+     * @return ResponseEntity containing the error information.
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handle(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -61,6 +80,11 @@ public class GlobalExceptions {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Exception handler for handling IllegalArgumentException.
+     * @param exception The exception instance.
+     * @return ResponseEntity containing the error information.
+     */
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Object> handle(IllegalArgumentException exception){
         final var error = customError(400, exception.getLocalizedMessage());
@@ -68,6 +92,11 @@ public class GlobalExceptions {
         return ResponseEntity.status(error.getStatusCode()).body(error);
     }
 
+    /**
+     * Exception handler for handling HttpRequestMethodNotSupportedException.
+     * @param exception The exception instance.
+     * @return ResponseEntity containing the error information.
+     */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<Object>  handle(HttpRequestMethodNotSupportedException exception){
         final var error = customError(exception.getStatusCode().value(), exception.getLocalizedMessage());
@@ -75,6 +104,12 @@ public class GlobalExceptions {
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(error);
     }
 
+    /**
+     * Creates a custom Error object with the specified status code and message.
+     * @param status The HTTP status code of the error.
+     * @param message The error message.
+     * @return An Error object with the specified status code and message.
+     */
     private Error customError(int status, String message){
         final var error = new Error();
 
@@ -84,6 +119,9 @@ public class GlobalExceptions {
         return error;
     }
 
+    /**
+     * Error class to represent custom error information.
+     */
     @Getter
     @Setter
     static class Error{
