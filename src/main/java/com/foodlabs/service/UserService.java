@@ -65,5 +65,4 @@ public class UserService {
 
         return factory.createUserResponse(user);
     }
-
 }
