@@ -7,6 +7,7 @@ import com.foodlabs.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,7 +33,8 @@ public class CategoryController {
         return service.getCategoryById(categoryId);
     }
 
-    @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
     public CategoryResponse createNewCategory(@RequestBody @Valid final CreateCategoryRequest request){
         log.debug("CategoryController::createNewCategory started");
         return service.createNewCategory(request);
