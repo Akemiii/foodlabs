@@ -22,14 +22,14 @@ public class CategoryController {
     public final CategoryService service;
 
     @GetMapping
-    public List<CategoryResponse> getProducts(){
-        log.debug("CategoryController::getProducts started");
-        return service.getProducts();
+    public List<CategoryResponse> getCategories(){
+        log.debug("CategoryController::getCategories started");
+        return service.getCategories();
     }
 
     @GetMapping("{categoryId}")
-    public CategoryResponse getProduct(@PathVariable UUID categoryId){
-        log.debug("CategoryController::getProduct started");
+    public CategoryResponse getCategory(@PathVariable UUID categoryId){
+        log.debug("CategoryController::getCategory started");
         return service.getCategoryById(categoryId);
     }
 

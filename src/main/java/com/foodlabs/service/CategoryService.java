@@ -55,11 +55,11 @@ public class CategoryService {
      *
      * @return List of CategoryResponse objects representing the retrieved categories.
      */
-    public List<CategoryResponse> getProducts() {
-        log.debug("CategoryService::getProducts started");
+    public List<CategoryResponse> getCategories() {
+        log.debug("CategoryService::getCategories started");
 
         final var categories = repository.findAll();
-        log.debug("CategoryService::getProducts {}", categories);
+        log.debug("CategoryService::getCategories {}", categories);
         return categories.stream().map(factory::createCategoryResponse).toList();
     }
 
