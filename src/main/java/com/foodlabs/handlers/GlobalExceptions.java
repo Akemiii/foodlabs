@@ -3,7 +3,6 @@ package com.foodlabs.handlers;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +53,7 @@ public class GlobalExceptions {
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<Object> handle(NoResourceFoundException exception) {
         final var error = customError(exception.getStatusCode().value(), exception.getLocalizedMessage());
-        return ResponseEntity.status(exception.getStatusCode().value()).body(error);
+        return ResponseEntity.status(exception.getStatusCode().value()).body(error.getMessage());
     }
 
     /**
@@ -68,7 +67,7 @@ public class GlobalExceptions {
 
         final var error = customError(400, "Required request body is missing");
 
-        return ResponseEntity.status(error.getStatusCode()).body(error);
+        return ResponseEntity.status(error.getStatusCode()).body(error.getMessage());
     }
 
     /**
@@ -82,15 +81,7 @@ public class GlobalExceptions {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
-            String errorMessage;
-            if (Objects.equals(error.getCode(), "NotNull")) {
-                errorMessage = "Field '" + fieldName + "' cannot be null.";
-            } else if (Objects.equals(error.getCode(), "NotEmpty")) {
-                errorMessage = "Field '" + fieldName + "' cannot be empty.";
-            } else {
-                errorMessage = error.getDefaultMessage();
-            }
-            errors.put(fieldName, errorMessage);
+            errors.put(fieldName, error.getDefaultMessage());
         });
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
@@ -105,7 +96,7 @@ public class GlobalExceptions {
     public ResponseEntity<Object> handle(IllegalArgumentException exception) {
         final var error = customError(400, exception.getLocalizedMessage());
 
-        return ResponseEntity.status(error.getStatusCode()).body(error);
+        return ResponseEntity.status(error.getStatusCode()).body(error.getMessage());
     }
 
     /**
@@ -118,7 +109,7 @@ public class GlobalExceptions {
     public ResponseEntity<Object> handle(HttpRequestMethodNotSupportedException exception) {
         final var error = customError(exception.getStatusCode().value(), exception.getLocalizedMessage());
 
-        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(error);
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(error.getMessage());
     }
 
     /**
@@ -142,7 +133,7 @@ public class GlobalExceptions {
      */
     @Getter
     @Setter
-    static class Error {
+    private static class Error {
         private int statusCode;
         private String message;
     }
