@@ -36,7 +36,6 @@ public class CategoryFactory {
      */
     public CategoryResponse createCategoryResponse(Category category) {
         log.debug("CategoryFactory::createCategoryResponse started");
-        // Building a new CategoryResponse object using the Builder pattern
         return CategoryResponse.builder()
                 .categoryId(category.getCategoryId())
                 .name(category.getName())

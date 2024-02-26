@@ -16,6 +16,7 @@ public class UserFactory {
      * @return The User object created from the UserRequest.
      */
     public User createUserModel(UserRequest request){
+        log.debug("UserFactory::createUserModel started");
         return User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
@@ -30,6 +31,7 @@ public class UserFactory {
      * @return The UserResponse object created from the User object.
      */
     public UserResponse createUserResponse(User user){
+        log.debug("UserFactory::createUserResponse started");
         return UserResponse.builder()
                 .userId(user.getUserId())
                 .name(user.getName())
