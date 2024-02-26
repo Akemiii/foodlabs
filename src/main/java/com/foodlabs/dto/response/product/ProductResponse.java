@@ -1,21 +1,17 @@
-package com.foodlabs.model;
+package com.foodlabs.dto.response.product;
 
-import jakarta.persistence.*;
+import com.foodlabs.model.Category;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@Entity
-@Table(name = "products")
+@Builder
 @Getter
 @Setter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class Product {
-
-    @Id
+@AllArgsConstructor
+public class ProductResponse {
     private UUID productId;
     private String name;
     private BigDecimal price;
@@ -23,10 +19,6 @@ public class Product {
     private boolean offer;
     private BigDecimal offerPrice;
     private boolean active;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
     private Category category;
-
 
 }

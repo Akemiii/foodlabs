@@ -3,6 +3,8 @@ package com.foodlabs.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "orderProducts")
 @Getter
@@ -10,17 +12,17 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderProducts {
+public class OrderItem {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long orderProductsId;
+    private UUID orderItemId;
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private Order orderId;
+    private Order order;
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private Product productId;
+    private Product product;
     private Integer quantity;
     private String comment;
 

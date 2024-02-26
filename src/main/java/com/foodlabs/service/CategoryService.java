@@ -9,7 +9,6 @@ import com.foodlabs.repositories.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +22,8 @@ import java.util.UUID;
 @Slf4j
 public class CategoryService {
 
-    public final CategoryRepository repository;
-    public final CategoryFactory factory;
+    private final CategoryRepository repository;
+    private final CategoryFactory factory;
 
     /**
      * Find a category by its ID.
@@ -33,9 +32,8 @@ public class CategoryService {
      * @return The found category.
      * @throws EntityNotFoundException if the category with the given ID does not exist.
      */
-    @SneakyThrows
-    private Category findById(UUID categoryId) {
-        log.debug("CategoryService::findById {}", categoryId);
+    private Category findById(final UUID categoryId) {
+        log.info("CategoryService::findById {}", categoryId);
 
         return repository.findById(categoryId).orElseThrow(EntityNotFoundException::new);
     }
@@ -56,10 +54,10 @@ public class CategoryService {
      * @return List of CategoryResponse objects representing the retrieved categories.
      */
     public List<CategoryResponse> getCategories() {
-        log.debug("CategoryService::getCategories started");
+        log.info("CategoryService::getCategories started");
 
         final var categories = repository.findAll();
-        log.debug("CategoryService::getCategories {}", categories);
+        log.info("CategoryService::getCategories {}", categories);
         return categories.stream().map(factory::createCategoryResponse).toList();
     }
 
@@ -70,14 +68,14 @@ public class CategoryService {
      * @return The CategoryResponse representing the newly created category.
      */
     public CategoryResponse createNewCategory(@RequestBody @Valid final CreateCategoryRequest request) {
-        log.debug("CategoryService::createNewCategory started");
+        log.info("CategoryService::createNewCategory started");
 
         final var category = factory.createCategoryModel(request);
-        log.debug("CategoryService::createNewCategory mapped {}", category);
+        log.info("CategoryService::createNewCategory mapped {}", category);
 
-        log.debug("CategoryService::createNewCategory saving category {}", category);
+        log.info("CategoryService::createNewCategory saving category {}", category);
         repository.save(category);
-        log.debug("CategoryService::createNewCategory saved category {}", category);
+        log.info("CategoryService::createNewCategory saved category {}", category);
 
         return factory.createCategoryResponse(category);
     }
@@ -91,11 +89,11 @@ public class CategoryService {
      */
     public CategoryResponse updateCategory(final UUID categoryId,
                                            @RequestBody @Valid final UpdateCategoryRequest request) {
-        log.debug("CategoryService::updateCategory started");
+        log.info("CategoryService::updateCategory started");
 
         final var category = findById(categoryId);
 
-        log.debug("CategoryService::updateCategory setter nonNull fields");
+        log.info("CategoryService::updateCategory setter nonNull fields");
         if (Objects.nonNull(request.getName()) && !request.getName().isEmpty())
             category.setName(request.getName());
         if (Objects.nonNull(request.getImage()) && !request.getImage().isEmpty())
@@ -103,9 +101,9 @@ public class CategoryService {
         if (Objects.nonNull(request.getDescription()) && !request.getDescription().isEmpty())
             category.setDescription(request.getDescription());
 
-        log.debug("CategoryService::updateCategory updating category {}", category);
+        log.info("CategoryService::updateCategory updating category {}", category);
         repository.save(category);
-        log.debug("CategoryService::updateCategory updated category {}", category);
+        log.info("CategoryService::updateCategory updated category {}", category);
 
         return factory.createCategoryResponse(category);
     }
@@ -116,13 +114,13 @@ public class CategoryService {
      * @param categoryId The ID of the category to delete.
      */
     public void deleteCategory(final UUID categoryId) {
-        log.debug("CategoryService::deleteCategory started");
+        log.info("CategoryService::deleteCategory started");
 
         final var category = findById(categoryId);
 
-        log.debug("CategoryService::updateCategory deleting category {}", category);
+        log.info("CategoryService::updateCategory deleting category {}", category);
         repository.delete(category);
-        log.debug("CategoryService::updateCategory deleted category {}", category);
+        log.info("CategoryService::updateCategory deleted category {}", category);
     }
 
 }
