@@ -28,6 +28,7 @@ public class OrderFactory {
                 .orderId(order.getOrderId())
                 .status(order.getStatus())
                 .createdAt(order.getCreatedAt())
+                .user(order.getUser())
                 .items(order.getItems().stream()
                         .map(itemFactory::createOrderItemResponse)
                         .toList())
