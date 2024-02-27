@@ -1,7 +1,9 @@
 package com.foodlabs.dto.request;
 
-import com.foodlabs.model.Product;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -9,7 +11,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderItemRequest {
-    private Product product;
+    @NotBlank
+    private UUID productId;
+    @NotBlank
     private Integer quantity;
     private String comment;
 }
