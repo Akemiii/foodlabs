@@ -25,6 +25,7 @@ import java.util.UUID;
 public class ProductService {
     private final ProductRepository repository;
     private final ProductFactory factory;
+    private final CatalogService catalogService;
 
     public Product findById(final UUID productId) {
         log.info("ProductService::findById {}", productId);
@@ -49,8 +50,8 @@ public class ProductService {
 
         final var product = factory.createProductModel(request);
         log.info("ProductService::createNewProduct mapped {}", product);
-        repository.save(product);
-        log.info("ProductService::createNewProduct saved product");
+
+        saveProduct(product);
 
         return factory.createProductResponse(product);
     }
@@ -61,7 +62,7 @@ public class ProductService {
 
         product.setImage(request.getImage());
 
-        repository.save(product);
+        saveProduct(product);
 
         return factory.createProductImageResponse(product);
     }
@@ -72,7 +73,7 @@ public class ProductService {
 
         product.setActive(request.isActive());
 
-        repository.save(product);
+        saveProduct(product);
 
         return factory.createProductStatusResponse(product);
     }
@@ -84,32 +85,40 @@ public class ProductService {
         product.setOffer(request.isOffer());
         if (Objects.nonNull(request.getOfferPrice()))
             product.setOfferPrice(request.getOfferPrice());
-        repository.save(product);
+        saveProduct(product);
+
         return factory.createProductOfferResponse(product);
     }
 
+    private void saveProduct(Product product) {
+        repository.save(product);
+        log.info("Product saved : {}", product);
+        catalogService.send(product.toString());
+    }
+
     public ProductResponse updateProductDetails(final UUID productId,
-                                                @RequestBody @Valid final UpdateProductDetailsRequest request){
+                                                @RequestBody @Valid final UpdateProductDetailsRequest request) {
         final var product = findById(productId);
 
-        if(isNotBlank(request.getName()))
+        if (isNotBlank(request.getName()))
             product.setName(request.getName());
-        if(Objects.nonNull(request.getPrice()))
+        if (Objects.nonNull(request.getPrice()))
             product.setPrice(request.getPrice());
-        if(isNotBlank(request.getImage()))
+        if (isNotBlank(request.getImage()))
             product.setImage(request.getImage());
 
         product.setActive(request.isActive());
         product.setOffer(request.isOffer());
-        if(Objects.nonNull(request.getOfferPrice()))
+        if (Objects.nonNull(request.getOfferPrice()))
             product.setOfferPrice(request.getOfferPrice());
-        if(Objects.nonNull(request.getCategory()))
+        if (Objects.nonNull(request.getCategory()))
             product.setCategory(request.getCategory());
 
-        repository.save(product);
+        saveProduct(product);
 
         return factory.createProductResponse(product);
     }
+
     public void deleteProduct(final UUID productId) {
         final var product = findById(productId);
 

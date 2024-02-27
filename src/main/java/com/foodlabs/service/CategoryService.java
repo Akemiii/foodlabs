@@ -24,6 +24,7 @@ public class CategoryService {
 
     private final CategoryRepository repository;
     private final CategoryFactory factory;
+    private final CatalogService catalogService;
 
     /**
      * Find a category by its ID.
@@ -77,6 +78,8 @@ public class CategoryService {
         repository.save(category);
         log.info("CategoryService::createNewCategory saved category {}", category);
 
+        catalogService.send(category.toString());
+
         return factory.createCategoryResponse(category);
     }
 
@@ -104,6 +107,8 @@ public class CategoryService {
         log.info("CategoryService::updateCategory updating category {}", category);
         repository.save(category);
         log.info("CategoryService::updateCategory updated category {}", category);
+
+        catalogService.send(category.toString());
 
         return factory.createCategoryResponse(category);
     }
