@@ -3,6 +3,7 @@ package com.foodlabs.handlers;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptions {
 
     /**
@@ -29,6 +31,7 @@ public class GlobalExceptions {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<String> handle(DataIntegrityViolationException ex) {
         String errorMessage = "Unique index or primary key violation";
+        log.error(ex.getLocalizedMessage());
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
     }
@@ -64,6 +67,7 @@ public class GlobalExceptions {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Object> handle(HttpMessageNotReadableException exception) {
 
+        log.error(exception.getLocalizedMessage());
         final var error = customError(400, "Required request body is missing");
 
         return ResponseEntity.status(error.getStatusCode()).body(error.getMessage());

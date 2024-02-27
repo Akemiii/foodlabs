@@ -26,7 +26,7 @@ public class ProductService {
     private final ProductRepository repository;
     private final ProductFactory factory;
 
-    private Product findById(final UUID productId) {
+    public Product findById(final UUID productId) {
         log.info("ProductService::findById {}", productId);
 
         return repository.findById(productId).orElseThrow(EntityNotFoundException::new);
