@@ -30,8 +30,7 @@ public class UserService {
      * @return The found user.
      * @throws EntityNotFoundException if the user with the given ID does not exist.
      */
-    @SneakyThrows
-    private User findById(UUID userId) {
+    public User findById(UUID userId) {
         log.debug("UserService::findById {}", userId);
 
         return repository.findById(userId).orElseThrow(EntityNotFoundException::new);
