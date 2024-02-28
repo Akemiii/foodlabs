@@ -78,7 +78,7 @@ public class CategoryService {
         repository.save(category);
         log.info("CategoryService::createNewCategory saved category {}", category);
 
-        catalogService.send(category.toString());
+        catalogService.send("Update catalog");
 
         return factory.createCategoryResponse(category);
     }
@@ -108,7 +108,7 @@ public class CategoryService {
         repository.save(category);
         log.info("CategoryService::updateCategory updated category {}", category);
 
-        catalogService.send(category.toString());
+        catalogService.send("Update catalog");
 
         return factory.createCategoryResponse(category);
     }

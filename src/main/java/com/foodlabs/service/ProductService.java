@@ -93,7 +93,7 @@ public class ProductService {
     private void saveProduct(Product product) {
         repository.save(product);
         log.info("Product saved : {}", product);
-        catalogService.send(product.toString());
+        catalogService.send("Update catalog");
     }
 
     public ProductResponse updateProductDetails(final UUID productId,
