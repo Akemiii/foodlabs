@@ -57,9 +57,13 @@ public class CategoryService {
     public List<CategoryResponse> getCategories() {
         log.info("CategoryService::getCategories started");
 
-        final var categories = repository.findAll();
+        final var categories = getAllCategories();
         log.info("CategoryService::getCategories {}", categories);
         return categories.stream().map(factory::createCategoryResponse).toList();
+    }
+
+    public List<Category> getAllCategories(){
+        return repository.findAll();
     }
 
     /**

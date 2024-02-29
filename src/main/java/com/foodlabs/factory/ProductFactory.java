@@ -1,10 +1,7 @@
 package com.foodlabs.factory;
 
 import com.foodlabs.dto.request.product.CreateProductRequest;
-import com.foodlabs.dto.response.product.ProductImageResponse;
-import com.foodlabs.dto.response.product.ProductOfferResponse;
-import com.foodlabs.dto.response.product.ProductResponse;
-import com.foodlabs.dto.response.product.ProductStatusResponse;
+import com.foodlabs.dto.response.product.*;
 import com.foodlabs.model.Product;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -38,6 +35,18 @@ public class ProductFactory {
                 .offerPrice(product.getOfferPrice())
                 .active(product.isActive())
                 .category(product.getCategory())
+                .build();
+    }
+
+    public ProductCatalogResponse createProductCatalogResponse(Product product){
+        return ProductCatalogResponse.builder()
+                .productId(product.getProductId())
+                .name(product.getName())
+                .price(product.getPrice())
+                .image(product.getImage())
+                .offer(product.isOffer())
+                .offerPrice(product.getOfferPrice())
+                .active(product.isActive())
                 .build();
     }
 

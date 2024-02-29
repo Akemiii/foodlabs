@@ -40,9 +40,13 @@ public class ProductService {
     public List<ProductResponse> getProducts() {
         log.info("ProductService::getProducts started");
 
-        final var products = repository.findAll();
+        final var products = getAllProducts();
         log.info("ProductService::getProducts return all products");
         return products.stream().map(factory::createProductResponse).toList();
+    }
+
+    public List<Product> getAllProducts(){
+        return repository.findAll();
     }
 
     public ProductResponse createNewProduct(@RequestBody @Valid final CreateProductRequest request) {
