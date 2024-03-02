@@ -7,7 +7,7 @@ services:
     ports:
       - "2181:2181"
     networks:
-      - kafka-network
+      - foodLabs-network
 
   kafka:
     image: wurstmeister/kafka:latest
@@ -23,7 +23,7 @@ services:
     depends_on:
       - zookeeper
     networks:
-      - kafka-network
+      - foodLabs-network
 
   postgres:
     image: postgres:latest
@@ -35,8 +35,18 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: db
     networks:
-      - kafka-network
+      - foodLabs-network
+
+  foodlabs:
+    build: .
+    container_name: foodlabs
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - foodLabs-network
 
 networks:
-  kafka-network:
+  foodLabs-network:
     driver: bridge

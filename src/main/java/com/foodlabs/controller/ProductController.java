@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -74,7 +75,7 @@ public class ProductController {
 
     @GetMapping("/catalog")
     public ResponseEntity<Object> getCatalog() {
-        String filePath = "C:\\Users\\Akemii\\IdeaProjects\\foodlabs\\catalog.json";
+        String filePath = Paths.get("catalog.json").toString();
         File file = new File(filePath);
 
         try {
