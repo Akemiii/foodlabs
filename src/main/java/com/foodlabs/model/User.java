@@ -1,6 +1,7 @@
 package com.foodlabs.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.UUID;
@@ -19,6 +20,7 @@ public class User {
     private UUID userId;
     private String name;
     @Column(unique = true)
+    @NotNull
     private String email;
     private String password;
     private boolean admin;
