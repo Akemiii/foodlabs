@@ -1,5 +1,6 @@
 package com.foodlabs.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.foodlabs.dto.request.product.*;
 import com.foodlabs.dto.response.product.ProductImageResponse;
 import com.foodlabs.dto.response.product.ProductOfferResponse;
@@ -10,8 +11,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
@@ -67,5 +70,24 @@ public class ProductController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable final UUID productId) {
         service.deleteProduct(productId);
+    }
+
+    @GetMapping("/catalog")
+    public ResponseEntity<Object> getCatalog() {
+        String filePath = "C:\\Users\\Akemii\\IdeaProjects\\foodlabs\\catalog.json";
+        File file = new File(filePath);
+
+        try {
+
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            Object jsonData = objectMapper.readValue(file, Object.class);
+
+            log.info(jsonData.toString());
+
+            return new ResponseEntity<>(jsonData, HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

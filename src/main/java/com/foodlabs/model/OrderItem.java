@@ -3,10 +3,9 @@ package com.foodlabs.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.UUID;
 
 @Entity
-@Table(name = "orderProducts")
+@Table(name = "OrderItems")
 @Getter
 @Setter
 @Builder
@@ -16,7 +15,7 @@ public class OrderItem {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private UUID orderItemId;
+    private Long orderItemId;
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;

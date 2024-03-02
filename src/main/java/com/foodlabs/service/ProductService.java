@@ -11,6 +11,7 @@ import com.foodlabs.repositories.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,8 +50,13 @@ public class ProductService {
         return repository.findAll();
     }
 
+    @SneakyThrows
     public ProductResponse createNewProduct(@RequestBody @Valid final CreateProductRequest request) {
         log.info("ProductService::createNewProduct started");
+
+        /* Product Validation */
+        if (request.getCategory().getCategoryId() == null) throw new IllegalArgumentException("You must select an existing category");
+
 
         final var product = factory.createProductModel(request);
         log.info("ProductService::createNewProduct mapped {}", product);
